@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kashi\\OneDrive\\Desktop\\mousejiggler-master\\MouseJiggler\\MouseJiggler.csproj": {}
+    "D:\\Work\\GITHUB-REPO\\Mouse-Jiggler\\MouseJiggler.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kashi\\OneDrive\\Desktop\\mousejiggler-master\\MouseJiggler\\MouseJiggler.csproj": {
+    "D:\\Work\\GITHUB-REPO\\Mouse-Jiggler\\MouseJiggler.csproj": {
       "version": "2.0.14",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kashi\\OneDrive\\Desktop\\mousejiggler-master\\MouseJiggler\\MouseJiggler.csproj",
+        "projectUniqueName": "D:\\Work\\GITHUB-REPO\\Mouse-Jiggler\\MouseJiggler.csproj",
         "projectName": "MouseJiggler",
-        "projectPath": "C:\\Users\\kashi\\OneDrive\\Desktop\\mousejiggler-master\\MouseJiggler\\MouseJiggler.csproj",
+        "projectPath": "D:\\Work\\GITHUB-REPO\\Mouse-Jiggler\\MouseJiggler.csproj",
         "packagesPath": "C:\\Users\\kashi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kashi\\OneDrive\\Desktop\\mousejiggler-master\\MouseJiggler\\obj\\",
+        "outputPath": "D:\\Work\\GITHUB-REPO\\Mouse-Jiggler\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\kashi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -22,7 +22,9 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.telerik.com/v3/index.json": {}
         },
         "frameworks": {
           "net6.0-windows7.0": {
@@ -34,6 +36,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -47,13 +54,13 @@
             "Microsoft.NET.ILLink.Analyzers": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.100-1.23211.1, )",
+              "version": "[7.0.100-1.23401.1, )",
               "autoReferenced": true
             },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.100-1.23211.1, )",
+              "version": "[7.0.100-1.23401.1, )",
               "autoReferenced": true
             },
             "PInvoke.User32": {
@@ -79,19 +86,19 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.26, 6.0.26]"
+              "version": "[6.0.31, 6.0.31]"
             },
             {
               "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[6.0.26, 6.0.26]"
+              "version": "[6.0.31, 6.0.31]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.26, 6.0.26]"
+              "version": "[6.0.31, 6.0.31]"
             },
             {
               "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.26, 6.0.26]"
+              "version": "[6.0.31, 6.0.31]"
             }
           ],
           "frameworkReferences": {
@@ -102,7 +109,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {

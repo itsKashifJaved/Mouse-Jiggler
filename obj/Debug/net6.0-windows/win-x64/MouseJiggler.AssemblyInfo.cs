@@ -18,7 +18,7 @@ using System.Reflection;
 
 Tick the 'Jiggling?' checkbox to begin jiggling the mouse; untick it to stop. The 'Zen jiggle?' checkbox (under ""Settings..."") enables a mode in which the pointer is jiggled 'virtually' - the system believes it to be moving and thus screen saver activation, etc., is prevented, but the pointer does not actually move. This may not work for idle detection under all applications.")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("2.0.14.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("2.0.14")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("2.0.14+bd55a1c1e7db6c8044d8ecd8bf8f12af5c4c3edc")]
 [assembly: System.Reflection.AssemblyProductAttribute("MouseJiggler")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MouseJiggler")]
 [assembly: System.Reflection.AssemblyVersionAttribute("2.0.14.0")]

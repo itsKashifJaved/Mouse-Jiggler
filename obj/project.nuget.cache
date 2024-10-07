@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "/U2o/VB8PQc7jamtN7FVGOS9e6sJFzC5uQCzc2zFd35JxYzFQnYT8n3Vwk68vcMeK3HZje1aIM7r+nWACJlBYA==",
+  "dgSpecHash": "5EShAzQzGBs=",
   "success": true,
-  "projectFilePath": "C:\\Users\\kashi\\OneDrive\\Desktop\\mousejiggler-master\\MouseJiggler\\MouseJiggler.csproj",
+  "projectFilePath": "D:\\Work\\GITHUB-REPO\\Mouse-Jiggler\\MouseJiggler.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kashi\\.nuget\\packages\\jetbrains.annotations\\2022.3.1\\jetbrains.annotations.2022.3.1.nupkg.sha512",
     "C:\\Users\\kashi\\.nuget\\packages\\microsoft.csharp\\4.4.1\\microsoft.csharp.4.4.1.nupkg.sha512",
-    "C:\\Users\\kashi\\.nuget\\packages\\microsoft.net.illink.analyzers\\7.0.100-1.23211.1\\microsoft.net.illink.analyzers.7.0.100-1.23211.1.nupkg.sha512",
-    "C:\\Users\\kashi\\.nuget\\packages\\microsoft.net.illink.tasks\\7.0.100-1.23211.1\\microsoft.net.illink.tasks.7.0.100-1.23211.1.nupkg.sha512",
+    "C:\\Users\\kashi\\.nuget\\packages\\microsoft.net.illink.analyzers\\7.0.100-1.23401.1\\microsoft.net.illink.analyzers.7.0.100-1.23401.1.nupkg.sha512",
+    "C:\\Users\\kashi\\.nuget\\packages\\microsoft.net.illink.tasks\\7.0.100-1.23401.1\\microsoft.net.illink.tasks.7.0.100-1.23401.1.nupkg.sha512",
     "C:\\Users\\kashi\\.nuget\\packages\\pinvoke.kernel32\\0.7.124\\pinvoke.kernel32.0.7.124.nupkg.sha512",
     "C:\\Users\\kashi\\.nuget\\packages\\pinvoke.user32\\0.7.124\\pinvoke.user32.0.7.124.nupkg.sha512",
     "C:\\Users\\kashi\\.nuget\\packages\\pinvoke.windows.core\\0.7.124\\pinvoke.windows.core.0.7.124.nupkg.sha512",
@@ -16,10 +16,10 @@
     "C:\\Users\\kashi\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
     "C:\\Users\\kashi\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "C:\\Users\\kashi\\.nuget\\packages\\validation\\2.4.15\\validation.2.4.15.nupkg.sha512",
-    "C:\\Users\\kashi\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.26\\microsoft.windowsdesktop.app.ref.6.0.26.nupkg.sha512",
-    "C:\\Users\\kashi\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.26\\microsoft.netcore.app.ref.6.0.26.nupkg.sha512",
-    "C:\\Users\\kashi\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.26\\microsoft.aspnetcore.app.ref.6.0.26.nupkg.sha512",
-    "C:\\Users\\kashi\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.26\\microsoft.netcore.app.host.win-x64.6.0.26.nupkg.sha512"
+    "C:\\Users\\kashi\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.31\\microsoft.windowsdesktop.app.ref.6.0.31.nupkg.sha512",
+    "C:\\Users\\kashi\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.31\\microsoft.netcore.app.ref.6.0.31.nupkg.sha512",
+    "C:\\Users\\kashi\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.31\\microsoft.aspnetcore.app.ref.6.0.31.nupkg.sha512",
+    "C:\\Users\\kashi\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.31\\microsoft.netcore.app.host.win-x64.6.0.31.nupkg.sha512"
   ],
   "logs": []
 }

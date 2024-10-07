@@ -38,6 +38,8 @@ namespace ArkaneSystems.MouseJiggler
             cbSettings = new System.Windows.Forms.CheckBox();
             cbJiggling = new System.Windows.Forms.CheckBox();
             panelSettings = new System.Windows.Forms.Panel();
+            cbKeys = new System.Windows.Forms.CheckBox();
+            cbScroll = new System.Windows.Forms.CheckBox();
             lbPeriod = new System.Windows.Forms.Label();
             tbPeriod = new System.Windows.Forms.TrackBar();
             cbMinimize = new System.Windows.Forms.CheckBox();
@@ -65,7 +67,7 @@ namespace ArkaneSystems.MouseJiggler
             flpLayout.Location = new System.Drawing.Point(0, 0);
             flpLayout.Name = "flpLayout";
             flpLayout.Padding = new System.Windows.Forms.Padding(5);
-            flpLayout.Size = new System.Drawing.Size(304, 160);
+            flpLayout.Size = new System.Drawing.Size(304, 161);
             flpLayout.TabIndex = 2;
             // 
             // panelBase
@@ -80,11 +82,13 @@ namespace ArkaneSystems.MouseJiggler
             // 
             // cmdTrayify
             // 
+            cmdTrayify.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             cmdTrayify.Location = new System.Drawing.Point(244, 2);
             cmdTrayify.Name = "cmdTrayify";
             cmdTrayify.Size = new System.Drawing.Size(40, 23);
             cmdTrayify.TabIndex = 3;
-            cmdTrayify.Text = "🔽";
+            cmdTrayify.Text = "-";
+            cmdTrayify.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             cmdTrayify.UseVisualStyleBackColor = true;
             cmdTrayify.Click += cmdTrayify_Click;
             // 
@@ -116,15 +120,37 @@ namespace ArkaneSystems.MouseJiggler
             // 
             panelSettings.AutoSize = true;
             panelSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            panelSettings.Controls.Add(cbKeys);
+            panelSettings.Controls.Add(cbScroll);
             panelSettings.Controls.Add(lbPeriod);
             panelSettings.Controls.Add(tbPeriod);
             panelSettings.Controls.Add(cbMinimize);
             panelSettings.Controls.Add(cbZen);
             panelSettings.Location = new System.Drawing.Point(8, 42);
             panelSettings.Name = "panelSettings";
-            panelSettings.Size = new System.Drawing.Size(289, 110);
+            panelSettings.Size = new System.Drawing.Size(290, 110);
             panelSettings.TabIndex = 2;
             panelSettings.Visible = false;
+            // 
+            // cbKeys
+            // 
+            cbKeys.AutoSize = true;
+            cbKeys.Location = new System.Drawing.Point(184, 11);
+            cbKeys.Name = "cbKeys";
+            cbKeys.Size = new System.Drawing.Size(103, 19);
+            cbKeys.TabIndex = 8;
+            cbKeys.Text = "Random Keys?";
+            cbKeys.UseVisualStyleBackColor = true;
+            // 
+            // cbScroll
+            // 
+            cbScroll.AutoSize = true;
+            cbScroll.Location = new System.Drawing.Point(87, 11);
+            cbScroll.Name = "cbScroll";
+            cbScroll.Size = new System.Drawing.Size(99, 19);
+            cbScroll.TabIndex = 7;
+            cbScroll.Text = "Mouse Scroll?";
+            cbScroll.UseVisualStyleBackColor = true;
             // 
             // lbPeriod
             // 
@@ -138,11 +164,11 @@ namespace ArkaneSystems.MouseJiggler
             // tbPeriod
             // 
             tbPeriod.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            tbPeriod.Location = new System.Drawing.Point(4, 62);
+            tbPeriod.Location = new System.Drawing.Point(2, 62);
             tbPeriod.Maximum = 60;
             tbPeriod.Minimum = 1;
             tbPeriod.Name = "tbPeriod";
-            tbPeriod.Size = new System.Drawing.Size(281, 45);
+            tbPeriod.Size = new System.Drawing.Size(282, 45);
             tbPeriod.TabIndex = 6;
             tbPeriod.TickFrequency = 2;
             tbPeriod.Value = 1;
@@ -151,7 +177,7 @@ namespace ArkaneSystems.MouseJiggler
             // cbMinimize
             // 
             cbMinimize.AutoSize = true;
-            cbMinimize.Location = new System.Drawing.Point(10, 37);
+            cbMinimize.Location = new System.Drawing.Point(7, 37);
             cbMinimize.Name = "cbMinimize";
             cbMinimize.Size = new System.Drawing.Size(123, 19);
             cbMinimize.TabIndex = 5;
@@ -162,7 +188,7 @@ namespace ArkaneSystems.MouseJiggler
             // cbZen
             // 
             cbZen.AutoSize = true;
-            cbZen.Location = new System.Drawing.Point(10, 11);
+            cbZen.Location = new System.Drawing.Point(7, 11);
             cbZen.Name = "cbZen";
             cbZen.Size = new System.Drawing.Size(83, 19);
             cbZen.TabIndex = 4;
@@ -173,7 +199,7 @@ namespace ArkaneSystems.MouseJiggler
             // niTray
             // 
             niTray.Icon = (System.Drawing.Icon)resources.GetObject("niTray.Icon");
-            niTray.Text = "Mouse Jiggler";
+            niTray.Text = "KJ Mouse";
             niTray.DoubleClick += niTray_DoubleClick;
             // 
             // MainForm
@@ -182,13 +208,14 @@ namespace ArkaneSystems.MouseJiggler
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoSize = true;
             AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            ClientSize = new System.Drawing.Size(304, 160);
+            ClientSize = new System.Drawing.Size(304, 161);
             Controls.Add(flpLayout);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "MainForm";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Jiggler";
             Load += MainForm_Load;
             Shown += MainForm_Shown;
@@ -217,6 +244,8 @@ namespace ArkaneSystems.MouseJiggler
         private System.Windows.Forms.Label lbPeriod;
         private System.Windows.Forms.NotifyIcon niTray;
         private System.Windows.Forms.Button cmdTrayify;
+        private System.Windows.Forms.CheckBox cbKeys;
+        private System.Windows.Forms.CheckBox cbScroll;
     }
 }
 
