@@ -2,232 +2,276 @@
 
 using ArkaneSystems.MouseJiggler.Properties;
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using static PInvoke.User32;
+
 
 #endregion
 
 namespace ArkaneSystems.MouseJiggler
 {
-    public partial class MainForm : Form
-    {
-        // Importing user32.dll for mouse and keyboard simulation
-        [DllImport("user32.dll")]
-        public static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
+	public partial class MainForm : Form
+	{
+		private DateTime _lastMouseMove;
+		private int _idleThreshold = 1000;
 
-        [DllImport("user32.dll")]
-        public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, uint dwExtraInfo);
+		// Importing user32.dll for mouse and keyboard simulation
+		[DllImport("user32.dll")]
+		public static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
 
-        // Constants for mouse events
-        private const int MOUSEEVENTF_WHEEL = 0x0800;
+		[DllImport("user32.dll")]
+		public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, uint dwExtraInfo);
 
-        // Constants for key events
-        private const uint KEYEVENTF_KEYDOWN = 0x0000;
-        private const uint KEYEVENTF_KEYUP = 0x0002;
+		// Constants for mouse events
+		private const int MOUSEEVENTF_WHEEL = 0x0800;
 
-        // Key codes for Left Ctrl, Left Alt, and Arrow keys
-        private readonly byte[] keysToPress = { 0xA2, 0xA4, 0x26, 0x28, 0x25, 0x27 }; // Left Ctrl, Left Alt, Up, Down, Left, Right
+		// Constants for key events
+		private const uint KEYEVENTF_KEYDOWN = 0x0000;
+		private const uint KEYEVENTF_KEYUP = 0x0002;
 
-        private Random random = new Random();
+		// Key codes for Left Ctrl, Left Alt, and Arrow keys
+		private readonly byte[] keysToPress = { 0xA2, 0xA4, 0x26, 0x28, 0x25, 0x27 }; // Left Ctrl, Left Alt, Up, Down, Left, Right
 
-        /// <summary>
-        /// Constructor for use by the form designer.
-        /// </summary>
-        public MainForm()
-            : this(jiggleOnStartup: false, minimizeOnStartup: false, zenJiggleEnabled: false, jigglePeriod: 1)
-        { }
+		private Random random = new Random();
 
-        public MainForm(bool jiggleOnStartup, bool minimizeOnStartup, bool zenJiggleEnabled, int jigglePeriod)
-        {
-            this.InitializeComponent();
+		/// <summary>
+		/// Constructor for use by the form designer.
+		/// </summary>
+		public MainForm()
+			: this(jiggleOnStartup: false, minimizeOnStartup: false, zenJiggleEnabled: false, jigglePeriod: 1)
+		{ }
 
-            // Set some default values
-            this.cbMinimize.Checked = true;
-            this.cbZen.Checked = false;
-            this.cbJiggling.Checked = true;
-            this.tbPeriod.Value = 4;
+		public MainForm(bool jiggleOnStartup, bool minimizeOnStartup, bool zenJiggleEnabled, int jigglePeriod)
+		{
+			this.InitializeComponent();
 
-            this.panelSettings.Visible = true;
-        }
+			// Set some default values
+			this.cbMinimize.Checked = true;
+			this.cbZen.Checked = false;
+			this.cbJiggling.Checked = true;
+			this.tbPeriod.Value = 4;
 
-        public bool JiggleOnStartup { get; }
+			this.panelSettings.Visible = true;
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            if (this.JiggleOnStartup)
-                this.cbJiggling.Checked = false;
-        }
+			//timerMouseIdle.Start();
+		}
 
-        private void UpdateNotificationAreaText()
-        {
-            if (!this.cbJiggling.Checked)
-            {
-                this.niTray.Text = "Not jiggling the mouse.";
-            }
-            else
-            {
-                string? ww = this.ZenJiggleEnabled ? "with" : "without";
-                this.niTray.Text = $"Jiggling mouse every {this.JigglePeriod} s, {ww} Zen.";
-            }
-        }
+		public bool JiggleOnStartup { get; }
 
-        private void cmdAbout_Click(object sender, EventArgs e)
-        {
-            new AboutBox().ShowDialog(owner: this);
-        }
+		private void MainForm_Load(object sender, EventArgs e)
+		{
+			if (this.JiggleOnStartup)
+				this.cbJiggling.Checked = false;
+		}
 
-        #region Property synchronization
+		private void UpdateNotificationAreaText()
+		{
+			if (!this.cbJiggling.Checked)
+			{
+				this.niTray.Text = "Not jiggling the mouse.";
+			}
+			else
+			{
+				string? ww = this.ZenJiggleEnabled ? "with" : "without";
+				this.niTray.Text = $"Jiggling mouse every {this.JigglePeriod} s, {ww} Zen.";
+			}
+		}
 
-        private void cbSettings_CheckedChanged(object sender, EventArgs e)
-        {
-            this.panelSettings.Visible = this.cbSettings.Checked;
-        }
+		private void cmdAbout_Click(object sender, EventArgs e)
+		{
+			new AboutBox().ShowDialog(owner: this);
+		}
 
-        private void cbMinimize_CheckedChanged(object sender, EventArgs e)
-        {
-            this.MinimizeOnStartup = this.cbMinimize.Checked;
-        }
+		#region Property synchronization
 
-        private void cbZen_CheckedChanged(object sender, EventArgs e)
-        {
-            this.ZenJiggleEnabled = this.cbZen.Checked;
-        }
+		private void cbSettings_CheckedChanged(object sender, EventArgs e)
+		{
+			this.panelSettings.Visible = this.cbSettings.Checked;
+		}
 
-        private void tbPeriod_ValueChanged(object sender, EventArgs e)
-        {
-            this.JigglePeriod = this.tbPeriod.Value;
-        }
+		private void cbMinimize_CheckedChanged(object sender, EventArgs e)
+		{
+			this.MinimizeOnStartup = this.cbMinimize.Checked;
+		}
 
-        #endregion Property synchronization
+		private void cbZen_CheckedChanged(object sender, EventArgs e)
+		{
+			this.ZenJiggleEnabled = this.cbZen.Checked;
+		}
 
-        #region Do the Jiggle and Scroll/Key Press
+		private void tbPeriod_ValueChanged(object sender, EventArgs e)
+		{
+			this.JigglePeriod = this.tbPeriod.Value;
+		}
 
-        protected bool Zig = true;
+		#endregion Property synchronization
 
-        private void cbJiggling_CheckedChanged(object sender, EventArgs e)
-        {
-            this.jiggleTimer.Enabled = this.cbJiggling.Checked;
-        }
+		#region Do the Jiggle and Scroll/Key Press
 
-        private void jiggleTimer_Tick(object sender, EventArgs e)
-        {
-            // Mouse jiggle
-            if (this.ZenJiggleEnabled)
-                Helpers.Jiggle(delta: 4);
-            else if (this.Zig)
-                Helpers.Jiggle(delta: 4);
-            else //zag
-                Helpers.Jiggle(delta: -4);
+		protected bool Zig = true;
 
-            this.Zig = !this.Zig;
+		private void cbJiggling_CheckedChanged(object sender, EventArgs e)
+		{
+			this.jiggleTimer.Enabled = this.cbJiggling.Checked;
+		}
 
-            if (this.cbScroll.Checked)
-            {
-                if (this.Zig)
-                    mouse_event(MOUSEEVENTF_WHEEL, 0, 0, 120, 0); // Scroll up
-                else //zag
-                    mouse_event(MOUSEEVENTF_WHEEL, 0, 0, -120, 0); // Scroll down
+		private void jiggleTimer_Tick(object sender, EventArgs e)
+		{
+			// Mouse jiggle
+			if (this.ZenJiggleEnabled)
+				Helpers.Jiggle(delta: 4);
+			else if (this.Zig)
+				Helpers.Jiggle(delta: 4);
+			else //zag
+				Helpers.Jiggle(delta: -4);
 
-            }
+			this.Zig = !this.Zig;
 
-            if (this.cbKeys.Checked)
-            {
-                byte randomKey = keysToPress[random.Next(keysToPress.Length)];
+			if (this.cbScroll.Checked)
+			{
+				if (this.Zig)
+					mouse_event(MOUSEEVENTF_WHEEL, 0, 0, 120, 0); // Scroll up
+				else //zag
+					mouse_event(MOUSEEVENTF_WHEEL, 0, 0, -120, 0); // Scroll down
 
-                keybd_event(randomKey, 0, KEYEVENTF_KEYDOWN, 0); // Key down
-                keybd_event(randomKey, 0, KEYEVENTF_KEYUP, 0);   // Key up
-            }
-            
-        }
+			}
 
-        #endregion Do the Jiggle and Scroll/Key Press
+			if (this.cbKeys.Checked)
+			{
+				byte randomKey = keysToPress[random.Next(keysToPress.Length)];
 
-        #region Minimize and restore
+				keybd_event(randomKey, 0, KEYEVENTF_KEYDOWN, 0); // Key down
+				keybd_event(randomKey, 0, KEYEVENTF_KEYUP, 0);   // Key up
+			}
 
-        private void cmdTrayify_Click(object sender, EventArgs e)
-        {
-            this.MinimizeToTray();
-        }
+		}
 
-        private void niTray_DoubleClick(object sender, EventArgs e)
-        {
-            this.RestoreFromTray();
-        }
+		#endregion Do the Jiggle and Scroll/Key Press
 
-        private void MinimizeToTray()
-        {
-            this.Visible = false;
-            this.ShowInTaskbar = false;
-            this.niTray.Visible = true;
+		#region Minimize and restore
 
-            this.UpdateNotificationAreaText();
-        }
+		private void cmdTrayify_Click(object sender, EventArgs e)
+		{
+			this.MinimizeToTray();
+		}
 
-        private void RestoreFromTray()
-        {
-            this.Visible = true;
-            this.ShowInTaskbar = true;
-            this.niTray.Visible = false;
-        }
+		private void niTray_DoubleClick(object sender, EventArgs e)
+		{
+			this.RestoreFromTray();
+		}
 
-        #endregion Minimize and restore
+		private void MinimizeToTray()
+		{
+			this.Visible = false;
+			this.ShowInTaskbar = false;
+			this.niTray.Visible = true;
 
-        #region Settings property backing fields
+			this.UpdateNotificationAreaText();
+		}
 
-        private int jigglePeriod;
+		private void RestoreFromTray()
+		{
+			this.Visible = true;
+			this.ShowInTaskbar = true;
+			this.niTray.Visible = false;
+		}
 
-        private bool minimizeOnStartup;
+		#endregion Minimize and restore
 
-        private bool zenJiggleEnabled;
+		#region Settings property backing fields
 
-        #endregion Settings property backing fields
+		private int jigglePeriod;
 
-        #region Settings properties
+		private bool minimizeOnStartup;
 
-        public bool MinimizeOnStartup
-        {
-            get => this.minimizeOnStartup;
-            set
-            {
-                this.minimizeOnStartup = value;
-                Settings.Default.MinimizeOnStartup = value;
-                Settings.Default.Save();
-            }
-        }
+		private bool zenJiggleEnabled;
 
-        public bool ZenJiggleEnabled
-        {
-            get => this.zenJiggleEnabled;
-            set
-            {
-                this.zenJiggleEnabled = value;
-                Settings.Default.ZenJiggle = value;
-                Settings.Default.Save();
-            }
-        }
+		#endregion Settings property backing fields
 
-        public int JigglePeriod
-        {
-            get => this.jigglePeriod;
-            set
-            {
-                this.jigglePeriod = value;
-                Settings.Default.JigglePeriod = value;
-                Settings.Default.Save();
+		#region Settings properties
 
-                this.jiggleTimer.Interval = value * 1000;
-                this.lbPeriod.Text = $"{value} s";
-            }
-        }
+		public bool MinimizeOnStartup
+		{
+			get => this.minimizeOnStartup;
+			set
+			{
+				this.minimizeOnStartup = value;
+				Settings.Default.MinimizeOnStartup = value;
+				Settings.Default.Save();
+			}
+		}
 
-        #endregion Settings properties
-        private bool firstShown = true;
-        private void MainForm_Shown(object sender, EventArgs e)
-        {
-            if (this.firstShown && this.MinimizeOnStartup)
-                this.MinimizeToTray();
+		public bool ZenJiggleEnabled
+		{
+			get => this.zenJiggleEnabled;
+			set
+			{
+				this.zenJiggleEnabled = value;
+				Settings.Default.ZenJiggle = value;
+				Settings.Default.Save();
+			}
+		}
 
-            this.firstShown = false;
-        }
-    }
+		public int JigglePeriod
+		{
+			get => this.jigglePeriod;
+			set
+			{
+				this.jigglePeriod = value;
+				Settings.Default.JigglePeriod = value;
+				Settings.Default.Save();
+
+				this.jiggleTimer.Interval = value * 1000;
+				this.lbPeriod.Text = $"{value} s";
+			}
+		}
+
+		#endregion Settings properties
+		private bool firstShown = true;
+		private void MainForm_Shown(object sender, EventArgs e)
+		{
+			if (this.firstShown && this.MinimizeOnStartup)
+				this.MinimizeToTray();
+
+			this.firstShown = false;
+		}
+
+		private void timerMouseIdle_Tick(object sender, EventArgs e)
+		{
+			uint idleTime = GetIdleTime();
+
+			labelResponse.Text = idleTime.ToString();
+			if (idleTime >= _idleThreshold)
+			{
+				Debug.WriteLine("Mouse has been idle for {0} seconds", idleTime / 1000);
+				labelResponse.Text = string.Format("Mouse has been idle for {0} seconds", _idleThreshold / 1000);
+			}
+		}
+
+		private uint GetIdleTime()
+		{
+			LASTINPUTINFO lastInputInfo = new LASTINPUTINFO();
+			lastInputInfo.cbSize = (uint)Marshal.SizeOf(lastInputInfo);
+
+			if (GetLastInputInfo(ref lastInputInfo))
+			{
+				return ((uint)Environment.TickCount - lastInputInfo.dwTime);
+			}
+			return 0;
+		}
+
+		[StructLayout(LayoutKind.Sequential)]
+		private struct LASTINPUTINFO
+		{
+			public uint cbSize;
+			public uint dwTime;
+		}
+
+		[DllImport("user32.dll")]
+		private static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
+
+
+	}
 }
